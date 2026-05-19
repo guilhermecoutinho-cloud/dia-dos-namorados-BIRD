@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIRD - Campanha Dia dos Namorados</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0a0a0a',
+                            card: '#141414',
+                            accent: '#f43f5e', // Rose 500
+                            accentHover: '#e11d48', // Rose 600
+                            text: '#f5f5f5',
+                            muted: '#a3a3a3'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Correção definitiva de contraste usando cores puras em CSS */
+        body {
+            background-color: #0a0a0a !important;
+            color: #f5f5f5 !important;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        
+        .glass-header {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(244, 63, 94, 0.1);
+        }
+
+        /* Cards normais */
+        .idea-card {
+            background-color: #141414 !important;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .idea-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px -15px rgba(244, 63, 94, 0.3);
+            border-color: rgba(244, 63, 94, 0.4);
+        }
+
+        /* Card 10 Especial (Glow de borda sem bugar o fundo) */
+        .special-card {
+            background-color: #141414 !important;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        
+        .special-card:hover {
+            transform: translateY(-8px) scale(1.015);
+            border-color: rgba(244, 63, 94, 0.8);
+            box-shadow: 0 20px 50px -10px rgba(244, 63, 94, 0.45);
+        }
+
+        /* Animação de fade-in para os filtros */
+        .card-animate {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scrollbar Personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+            border-radius: 99px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f43f5e;
+        }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; color: black !important; }
+            .idea-card, .special-card { border: 1px solid #ccc !important; background: white !important; color: black !important; break-inside: avoid; }
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+
+    <!-- Canvas de Corações no Fundo da Hero -->
+    <div class="absolute top-0 left-0 w-full h-[650px] overflow-hidden pointer-events-none z-0">
+        <canvas id="heartsCanvas" class="w-full h-full opacity-60"></canvas>
+        <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="glass-header sticky top-0 z-50 px-6 py-4 no-print">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <!-- Logotipo BIRD Apenas Texto (Visual limpo e elegante) -->
+                <div>
+                    <h1 class="font-heading font-black text-2xl tracking-wider uppercase leading-none text-white">BIRD</h1>
+                    <p class="text-[10px] text-brand-accent font-bold uppercase tracking-widest mt-1">Valentine's Special</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="window.print()" class="bg-white/5 hover:bg-white/10 text-white p-2.5 rounded-full border border-white/10 transition-colors" title="Imprimir ou Salvar PDF">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative max-w-7xl mx-auto px-6 pt-20 pb-12 text-center z-10">
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-accent/10 text-brand-accent text-xs font-bold uppercase tracking-widest mb-6 border border-brand-accent/30 animate-pulse">
+            <i data-lucide="heart" class="w-3.5 h-3.5 fill-brand-accent"></i> Dia dos Namorados BIRD
+        </span>
+        
+        <h2 class="font-heading font-black text-4xl md:text-7xl uppercase tracking-tighter mb-6 leading-none text-white">
+            As 10 Ideias Mais Fortes <br/> 
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-pink-500 to-rose-400 drop-shadow-[0_2px_20px_rgba(244,63,94,0.3)]">
+                Pra Campanha
+            </span>
+        </h2>
+        
+        <p class="text-brand-muted max-w-2xl mx-auto text-base md:text-lg font-medium">
+            Ideias urbanas estruturadas para tracionar visualizações, engajamento orgânico e posicionar as peças da BIRD como o presente ideal.
+        </p>
+
+        <!-- Filtros Rápidos (no-print) -->
+        <div class="flex flex-wrap justify-center gap-2 mt-12 no-print">
+            <button onclick="filterCards('all')" class="filter-btn active bg-brand-accent text-white px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border border-brand-accent">
+                Ver Todas
+            </button>
+            <button onclick="filterCards('humor')" class="filter-btn bg-neutral-900 text-brand-muted hover:text-white px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border border-neutral-800 hover:border-brand-accent/30">
+                Humor & Viral
+            </button>
+            <button onclick="filterCards('estetica')" class="filter-btn bg-neutral-900 text-brand-muted hover:text-white px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border border-neutral-800 hover:border-brand-accent/30">
+                Estilo & Trend
+            </button>
+            <button onclick="filterCards('venda')" class="filter-btn bg-neutral-900 text-brand-muted hover:text-white px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border border-neutral-800 hover:border-brand-accent/30">
+                Vendas & Social
+            </button>
+        </div>
+    </section>
+
+    <!-- Grid de Ideias -->
+    <main class="max-w-7xl mx-auto px-6 pb-24 z-10 relative">
+        <div id="ideasGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- IDEIA 1 -->
+            <article data-category="humor" class="idea-card group rounded-2xl p-6 flex flex-col h-full card-animate">
+                <div class="flex justify-between items-start mb-5">
+                    <span class="text-4xl font-heading font-black text-neutral-800 transition-colors duration-300 group-hover:text-brand-accent/70">01</span>
+                    <span class="bg-rose-500/10 text-brand-accent px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-brand-accent/20 flex items-center gap-1">
+                        <i data-lucide="sparkles" class="w-3 h-3"></i> Humor / Viral
+                    </span>
+                </div>
+                <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-brand-accent">
+                    “Seu namorado merece se vestir melhor”
+                </h3>
+                
+                <div class="space-y-4 flex-grow text-sm">
+                    <div class="bg-neutral-950/40 p-3 rounded-lg border border-white/5">
+                        <div class="flex items-center gap-2 text-brand-accent font-bold mb-1 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="zap" class="w-3.5 h-3.5 fill-brand-accent"></i> Gancho / Hook
+                        </div>
+                        <p class="text-neutral-200 font-medium">“Se teu namorado ainda usa camiseta de político… isso aqui é pra você”</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 text-brand-muted font-bold mb-2 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="film" class="w-3.5 h-3.5"></i> Estrutura do Vídeo
+                        </div>
+                        <ul class="text-neutral-300 space-y-2 list-none pl-1">
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> Namorada olhando decepcionada</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> Corte rápido</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> Transformação com fit completo BIRD</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> Música forte/trend do momento</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- IDEIA 2 -->
+            <article data-category="humor" class="idea-card group rounded-2xl p-6 flex flex-col h-full card-animate">
+                <div class="flex justify-between items-start mb-5">
+                    <span class="text-4xl font-heading font-black text-neutral-800 transition-colors duration-300 group-hover:text-pink-400/70">02</span>
+                    <span class="bg-pink-500/10 text-pink-400 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-pink-500/20 flex items-center gap-1">
+                        <i data-lucide="users" class="w-3 h-3"></i> Relato de Casal
+                    </span>
+                </div>
+                <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-pink-400">
+                    “Enquanto ela escolhe maquiagem…”
+                </h3>
+                
+                <div class="space-y-4 flex-grow text-sm">
+                    <div>
+                        <div class="flex items-center gap-2 text-brand-muted font-bold mb-2 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="film" class="w-3.5 h-3.5"></i> Estrutura do Vídeo
+                        </div>
+                        <ul class="text-neutral-300 space-y-2 list-none pl-1">
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> Ela escolhendo maquiagem calmamente</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> Corta para ele enlouquecendo na BIRD</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> Experimentando bonés, segurando tênis</li>
+                        </ul>
+                    </div>
+                    <div class="pt-2 border-t border-white/5">
+                        <div class="flex items-center gap-2 text-rose-400 font-bold mb-1 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="target" class="w-3.5 h-3.5"></i> Objetivo Principal
+                        </div>
+                        <p class="text-neutral-200">Alta identificação do público masculino + pegada cômica de casais.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- IDEIA 3 -->
+            <article data-category="estetica" class="idea-card group rounded-2xl p-6 flex flex-col h-full card-animate">
+                <div class="flex justify-between items-start mb-5">
+                    <span class="text-4xl font-heading font-black text-neutral-800 transition-colors duration-300 group-hover:text-purple-400/70">03</span>
+                    <span class="bg-purple-500/10 text-purple-400 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-purple-500/20 flex items-center gap-1">
+                        <i data-lucide="clapperboard" class="w-3 h-3"></i> Estética
+                    </span>
+                </div>
+                <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-purple-400">
+                    “POV: Vocês são o casal mais estiloso do rolê”
+                </h3>
+                
+                <div class="space-y-4 flex-grow text-sm">
+                    <div>
+                        <div class="flex items-center gap-2 text-purple-400 font-bold mb-3 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="palette" class="w-3.5 h-3.5"></i> Direção de Arte e Estética
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <span class="bg-neutral-950 px-2 py-1.5 rounded border border-white/5 text-xs text-neutral-300 flex items-center gap-1.5">🌃 Noite urbana</span>
+                            <span class="bg-neutral-950 px-2 py-1.5 rounded border border-white/5 text-xs text-neutral-300 flex items-center gap-1.5">🛍️ Mall/Shopping</span>
+                            <span class="bg-neutral-950 px-2 py-1.5 rounded border border-white/5 text-xs text-neutral-300 flex items-center gap-1.5">🚗 Estacionamento</span>
+                            <span class="bg-neutral-950 px-2 py-1.5 rounded border border-white/5 text-xs text-neutral-300 flex items-center gap-1.5">✨ Luzes desfocadas</span>
+                            <span class="bg-neutral-950 px-2 py-1.5 rounded border border-white/5 text-xs text-neutral-300 flex items-center gap-1.5">⏱️ Slow Motion</span>
+                            <span class="bg-neutral-950 px-2 py-1.5 rounded border border-white/5 text-xs text-neutral-300 flex items-center gap-1.5">🎵 Trap Romântico</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- IDEIA 4 -->
+            <article data-category="estetica" class="idea-card group rounded-2xl p-6 flex flex-col h-full card-animate">
+                <div class="flex justify-between items-start mb-5">
+                    <span class="text-4xl font-heading font-black text-neutral-800 transition-colors duration-300 group-hover:text-amber-400/70">04</span>
+                    <span class="bg-amber-500/10 text-amber-400 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-amber-500/20 flex items-center gap-1">
+                        <i data-lucide="trending-up" class="w-3 h-3"></i> Trend
+                    </span>
+                </div>
+                <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-amber-400">
+                    “Ela montou meu fit”
+                </h3>
+                
+                <div class="space-y-4 flex-grow text-sm">
+                    <div>
+                        <div class="flex items-center gap-2 text-brand-muted font-bold mb-2 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="film" class="w-3.5 h-3.5"></i> Estrutura do Vídeo
+                        </div>
+                        <ul class="text-neutral-300 space-y-2 list-none pl-1">
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> A namorada escolhendo o outfit ideal para ele</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> No final do vídeo: revelação cinematográfica do look montado</li>
+                        </ul>
+                    </div>
+                    <div class="pt-2 border-t border-white/5">
+                        <div class="flex items-center gap-2 text-amber-400 font-bold mb-1 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="star" class="w-3.5 h-3.5"></i> Diferencial
+                        </div>
+                        <p class="text-neutral-200">Enfatiza a interação e cumplicidade real do casal durante a curadoria.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- IDEIA 5 -->
+            <article data-category="estetica" class="idea-card group rounded-2xl p-6 flex flex-col h-full card-animate">
+                <div class="flex justify-between items-start mb-5">
+                    <span class="text-4xl font-heading font-black text-neutral-800 transition-colors duration-300 group-hover:text-cyan-400/70">05</span>
+                    <span class="bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-cyan-500/20 flex items-center gap-1">
+                        <i data-lucide="message-square" class="w-3 h-3"></i> Engajamento
+                    </span>
+                </div>
+                <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-cyan-400">
+                    “Qual casal representa mais?”
+                </h3>
+                
+                <div class="space-y-4 flex-grow text-sm">
+                    <div>
+                        <div class="flex items-center gap-2 text-brand-muted font-bold mb-2 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Formato de Vídeo
+                        </div>
+                        <p class="text-neutral-200 mb-3">Apresentação rápida de 2 ou 3 casais com estéticas urbanas diferentes para gerar comentários do público.</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 text-cyan-400 font-bold mb-2 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="shirt" class="w-3.5 h-3.5"></i> Subculturas de Moda
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-neutral-950 px-2 py-1 rounded border border-white/5 text-xs text-neutral-300">🛹 Skatista</span>
+                            <span class="bg-neutral-950 px-2 py-1 rounded border border-white/5 text-xs text-neutral-300">🎤 Trapper / Driller</span>
+                            <span class="bg-neutral-950 px-2 py-1 rounded border border-white/5 text-xs text-neutral-300">✨ Clean Street / Minimal</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- IDEIA 6 -->
+            <article data-category="venda" class="idea-card group rounded-2xl p-6 flex flex-col h-full card-animate">
+                <div class="flex justify-between items-start mb-5">
+                    <span class="text-4xl font-heading font-black text-neutral-800 transition-colors duration-300 group-hover:text-emerald-400/70">06</span>
+                    <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-emerald-500/20 flex items-center gap-1">
+                        <i data-lucide="shopping-bag" class="w-3 h-3"></i> Venda Indireta
+                    </span>
+                </div>
+                <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-emerald-400">
+                    “Presente de Dia dos Namorados na BIRD”
+                </h3>
+                
+                <div class="space-y-4 flex-grow text-sm">
+                    <div class="bg-neutral-950/40 p-3 rounded-lg border border-white/5">
+                        <div class="text-brand-accent font-bold mb-1 uppercase text-[10px] tracking-wider">Perguntinha-Chave</div>
+                        <p class="text-neutral-200 italic">“O que dar pra um namorado que curte streetwear e é exigente com o fit?”</p>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 text-brand-muted font-bold mb-2 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="eye" class="w-3.5 h-3.5"></i> Vitrine de Itens
+                        </div>
+                        <p class="text-neutral-300">Bonés estruturados, hoodies pesados, camisetas oversized com excelente caimento, tênis e chaveiros/acessórios.</p>
+                    </div>
+                    <div class="pt-2 border-t border-white/5">
+                        <div class="flex items-center gap-2 text-emerald-400 font-bold mb-1 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Vantagem BIRD
+                        </div>
+                        <p class="text-neutral-200">Não soa como anúncio tradicional; foca na solução rápida de presente.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- IDEIA 7 -->
+            <article data-category="humor" class="idea-card group rounded-2xl p-6 flex flex-col h-full card-animate">
+                <div class="flex justify-between items-start mb-5">
+                    <span class="text-4xl font-heading font-black text-neutral-800 transition-colors duration-300 group-hover:text-brand-accent/70">07</span>
+                    <span class="bg-rose-500/10 text-brand-accent px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-brand-accent/20 flex items-center gap-1">
+                        <i data-lucide="frown" class="w-3 h-3"></i> Humor
+                    </span>
+                </div>
+                <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-brand-accent">
+                    “Solteiro no Dia dos Namorados”
+                </h3>
+                
+                <div class="space-y-4 flex-grow text-sm">
+                    <div>
+                        <div class="flex items-center gap-2 text-brand-muted font-bold mb-2 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="film" class="w-3.5 h-3.5"></i> Estrutura do Vídeo
+                        </div>
+                        <ul class="text-neutral-300 space-y-2 list-none pl-1">
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> Sequência de casais melosos trocando carinhos</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span> Corta brusco pro amigo solteiro abraçado com as sacolas da BIRD</li>
+                        </ul>
+                    </div>
+                    <div class="bg-neutral-950/40 p-3 rounded-lg border border-white/5">
+                        <div class="text-rose-400 font-bold mb-1 uppercase text-[10px] tracking-wider">Legenda / Copy</div>
+                        <p class="text-neutral-200 italic">“Solteiro sim, mas o fit tá em dia.”</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- IDEIA 8 -->
+            <article data-category="estetica" class="idea-card group rounded-2xl p-6 flex flex-col h-full card-animate">
+                <div class="flex justify-between items-start mb-5">
+                    <span class="text-4xl font-heading font-black text-neutral-800 transition-colors duration-300 group-hover:text-purple-400/70">08</span>
+                    <span class="bg-purple-500/10 text-purple-400 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-purple-500/20 flex items-center gap-1">
+                        <i data-lucide="music" class="w-3 h-3"></i> Trend Rítmica
+                    </span>
+                </div>
+                <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-purple-400">
+                    “Transição no Beat”
+                </h3>
+                
+                <div class="space-y-4 flex-grow text-sm">
+                    <div>
+                        <div class="flex items-center gap-2 text-brand-muted font-bold mb-2 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="film" class="w-3.5 h-3.5"></i> Estrutura do Vídeo
+                        </div>
+                        <ul class="text-neutral-300 space-y-3 list-none pl-1">
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mt-2"></span>
+                                <div>
+                                    <span class="text-neutral-400">Início:</span> Casal com roupas básicas, amassadas ou sem conceito.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-accent mt-2"></span>
+                                <div>
+                                    <span class="text-brand-accent font-bold uppercase tracking-wider text-[10px]">BATIDA DA MÚSICA (DROP):</span> Transição seca e instantânea pro casal vestido de cima a baixo de BIRD com iluminação de alto nível.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- IDEIA 9 -->
+            <article data-category="estetica" class="idea-card group rounded-2xl p-6 flex flex-col h-full card-animate">
+                <div class="flex justify-between items-start mb-5">
+                    <span class="text-4xl font-heading font-black text-neutral-800 transition-colors duration-300 group-hover:text-cyan-400/70">09</span>
+                    <span class="bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-cyan-500/20 flex items-center gap-1">
+                        <i data-lucide="video" class="w-3 h-3"></i> Lifestyle
+                    </span>
+                </div>
+                <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-cyan-400">
+                    “Date Ideal”
+                </h3>
+                
+                <div class="space-y-4 flex-grow text-sm">
+                    <div>
+                        <div class="flex items-center gap-2 text-brand-muted font-bold mb-3 uppercase text-[10px] tracking-wider">
+                            <i data-lucide="aperture" class="w-3.5 h-3.5"></i> Cenas do Mini Vlog
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="bg-neutral-950 px-2 py-2 rounded text-xs flex items-center gap-2 text-neutral-300">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-brand-accent"></i> Escolha do look
+                            </div>
+                            <div class="bg-neutral-950 px-2 py-2 rounded text-xs flex items-center gap-2 text-neutral-300">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-brand-accent"></i> Café da tarde
+                            </div>
+                            <div class="bg-neutral-950 px-2 py-2 rounded text-xs flex items-center gap-2 text-neutral-300">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-brand-accent"></i> Role no shopping
+                            </div>
+                            <div class="bg-neutral-950 px-2 py-2 rounded text-xs flex items-center gap-2 text-neutral-300">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-brand-accent"></i> Detalhes dos fits
+                            </div>
+                            <div class="bg-neutral-950 px-2 py-2 rounded text-xs flex items-center gap-2 text-neutral-300">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-brand-accent"></i> Mãos dadas
+                            </div>
+                            <div class="bg-neutral-950 px-2 py-2 rounded text-xs flex items-center gap-2 text-neutral-300">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-brand-accent"></i> Detalhes do tênis
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- IDEIA 10 (Especial e Corrigido sem pseudo-elementos bugados) -->
+            <article data-category="venda" class="special-card group rounded-2xl p-8 flex flex-col h-full lg:col-span-3 md:col-span-2 overflow-hidden card-animate">
+                <div class="relative z-10">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-5xl font-heading font-black text-brand-accent/30 transition-colors duration-300 group-hover:text-brand-accent">10</span>
+                        <span class="bg-brand-accent text-white px-4 py-1 rounded-md text-xs font-bold uppercase tracking-wider shadow-md">
+                            Entretenimento / Prova Social
+                        </span>
+                    </div>
+                    
+                    <h3 class="font-heading font-black text-2xl mb-6 uppercase leading-tight text-white max-w-lg transition-colors duration-300 group-hover:text-brand-accent">
+                        “Ela não sabia o que dar”
+                    </h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 text-sm">
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-2 text-brand-muted font-bold uppercase text-[10px] tracking-wider">
+                                <i data-lucide="clipboard-list" class="w-4 h-4 text-brand-accent"></i> Roteiro de Experiência na Rua
+                            </div>
+                            <ul class="text-neutral-300 space-y-2 list-none pl-1">
+                                <li class="flex items-start gap-2.5">
+                                    <span class="bg-brand-accent text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">1</span>
+                                    <span>Abordagem descontraída de casais reais na rua.</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="bg-brand-accent text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">2</span>
+                                    <span>Pergunta direta sobre o presente de Dia dos Namorados.</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="bg-brand-accent text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">3</span>
+                                    <span>Se o namorado estiver confuso ou indeciso, a entrevistadora atua como facilitadora.</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="bg-brand-accent text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">4</span>
+                                    <span>Conduz o casal até a loja física da BIRD.</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="bg-brand-accent text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5">5</span>
+                                    <span>Filmagem dinâmica provando looks, acompanhada de reações autênticas e finalização com a compra/sacola.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-neutral-950 p-6 rounded-xl border border-white/5 flex flex-col justify-center gap-4">
+                            <div class="flex items-center gap-2 text-rose-400 font-bold uppercase text-[10px] tracking-wider">
+                                <i data-lucide="rocket" class="w-4 h-4"></i> Objetivo e Posicionamento
+                            </div>
+                            <p class="text-neutral-200 text-base leading-relaxed">
+                                Gerar entretenimento autêntico em formato de entrevista curta. Mostra na prática como a BIRD resolve as dores do público com peças fáceis de presentear e com estética acima da média.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 text-center py-10 text-neutral-500 text-xs no-print relative z-10">
+        <p>Desenvolvido para Apresentação Criativa de Campanha &bull; BIRD &copy; 2026</p>
+    </footer>
+
+    <!-- Scripts de Efeitos Visuais -->
+    <script>
+        // --- 1. SCRIPT DE FILTROS ---
+        function filterCards(category) {
+            // Atualizar botões de filtro
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-accent', 'text-white', 'active');
+                btn.classList.add('bg-neutral-900', 'text-brand-muted');
+            });
+            
+            const activeBtn = event.target;
+            activeBtn.classList.remove('bg-neutral-900', 'text-brand-muted');
+            activeBtn.classList.add('bg-brand-accent', 'text-white', 'active');
+
+            // Filtrar cards
+            const cards = document.querySelectorAll('#ideasGrid > article');
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                if (category === 'all' || cardCat === category || card.classList.contains('lg:col-span-3')) {
+                    card.style.display = 'flex';
+                    card.classList.add('card-animate');
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('card-animate');
+                }
+            });
+        }
+
+        // --- 2. CANVAS DE CORAÇÕES ANIMADOS ---
+        const canvas = document.getElementById('heartsCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let hearts = [];
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Heart {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * canvas.height; // Começar espalhado no início
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 50;
+                this.size = Math.random() * 14 + 6;
+                this.speedY = Math.random() * 0.8 + 0.3;
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.drift = Math.random() * 0.6 - 0.3;
+                this.driftTimer = Math.random() * 100;
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.driftTimer += 0.01;
+                this.x += Math.sin(this.driftTimer) * 0.3 + this.drift;
+
+                // Interação leve com o mouse
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < 120) {
+                    const force = (120 - distance) / 120;
+                    this.x -= dx * force * 0.02;
+                    this.y -= dy * force * 0.02;
+                }
+
+                // Fade out se chegar perto do topo do canvas
+                if (this.y < 100) {
+                    this.opacity -= 0.005;
+                }
+
+                if (this.y < 0 || this.opacity <= 0) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = '#f43f5e';
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#f43f5e';
+                
+                // Desenhar forma de coração perfeita no canvas
+                ctx.beginPath();
+                const d = this.size;
+                const hx = this.x;
+                const hy = this.y;
+                
+                ctx.moveTo(hx, hy - d / 4);
+                ctx.bezierCurveTo(hx - d / 2, hy - d / 2, hx - d, hy + d / 3, hx, hy + d);
+                ctx.bezierCurveTo(hx + d, hy + d / 3, hx + d / 2, hy - d / 2, hx, hy - d / 4);
+                
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Inicializar partículas
+        const heartCount = 35;
+        for (let i = 0; i < heartCount; i++) {
+            hearts.push(new Heart());
+        }
+
+        // Monitorar movimento do mouse
+        window.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach(heart => {
+                heart.update();
+                heart.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        
+        // Iniciar loop quando carregar a janela
+        window.onload = function() {
+            animate();
+        }
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
