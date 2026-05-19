@@ -116,7 +116,7 @@
 <body class="min-h-screen relative">
 
     <!-- Canvas de Corações no Fundo da Hero -->
-    <div class="absolute top-0 left-0 w-full h-[650px] overflow-hidden pointer-events-none z-0">
+    <div class="absolute top-0 left-0 w-full h-[550px] overflow-hidden pointer-events-none z-0">
         <canvas id="heartsCanvas" class="w-full h-full opacity-60"></canvas>
         <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent"></div>
     </div>
@@ -141,34 +141,35 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="relative max-w-7xl mx-auto px-6 pt-20 pb-12 text-center z-10">
-        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-accent/10 text-brand-accent text-xs font-bold uppercase tracking-widest mb-6 border border-brand-accent/30 animate-pulse">
-            <i data-lucide="heart" class="w-3.5 h-3.5 fill-brand-accent"></i> Dia dos Namorados BIRD
+    <section class="relative max-w-7xl mx-auto px-6 pt-12 md:pt-20 pb-8 md:pb-12 text-center z-10">
+        <span class="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-brand-accent/10 text-brand-accent text-[11px] md:text-xs font-bold uppercase tracking-widest mb-4 md:mb-6 border border-brand-accent/30 animate-pulse">
+            <i data-lucide="heart" class="w-3 md:w-3.5 h-3 md:h-3.5 fill-brand-accent"></i> Dia dos Namorados BIRD
         </span>
         
-        <h2 class="font-heading font-black text-4xl md:text-7xl uppercase tracking-tighter mb-6 leading-none text-white">
-            As 10 Ideias Mais Fortes <br/> 
+        <!-- Título com tamanho otimizado para celulares e computadores -->
+        <h2 class="font-heading font-black text-2xl sm:text-3xl md:text-5xl lg:text-6xl uppercase tracking-tighter mb-4 md:mb-6 leading-tight text-white">
+            As 10 Ideias Mais Fortes <br class="hidden sm:inline"/> 
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-pink-500 to-rose-400 drop-shadow-[0_2px_20px_rgba(244,63,94,0.3)]">
                 Pra Campanha
             </span>
         </h2>
         
-        <p class="text-brand-muted max-w-2xl mx-auto text-base md:text-lg font-medium">
-            Ideias urbanas estruturadas para tracionar visualizações, engajamento orgânico e posicionar as peças da BIRD como o presente ideal.
+        <p class="text-brand-muted max-w-xl mx-auto text-xs md:text-base font-medium leading-relaxed mb-6">
+            Planejamento estratégico de conteúdo urbano para tracionar engajamento, com cronograma sugerido para produzir e postar tudo antes de 12 de junho.
         </p>
 
         <!-- Filtros Rápidos (no-print) -->
-        <div class="flex flex-wrap justify-center gap-2 mt-12 no-print">
-            <button onclick="filterCards('all')" class="filter-btn active bg-brand-accent text-white px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border border-brand-accent">
+        <div class="flex flex-wrap justify-center gap-1.5 md:gap-2 mt-8 md:mt-12 no-print">
+            <button onclick="filterCards('all')" class="filter-btn active bg-brand-accent text-white px-4 py-1.5 md:px-5 md:py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all border border-brand-accent">
                 Ver Todas
             </button>
-            <button onclick="filterCards('humor')" class="filter-btn bg-neutral-900 text-brand-muted hover:text-white px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border border-neutral-800 hover:border-brand-accent/30">
+            <button onclick="filterCards('humor')" class="filter-btn bg-neutral-900 text-brand-muted hover:text-white px-4 py-1.5 md:px-5 md:py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all border border-neutral-800 hover:border-brand-accent/30">
                 Humor & Viral
             </button>
-            <button onclick="filterCards('estetica')" class="filter-btn bg-neutral-900 text-brand-muted hover:text-white px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border border-neutral-800 hover:border-brand-accent/30">
+            <button onclick="filterCards('estetica')" class="filter-btn bg-neutral-900 text-brand-muted hover:text-white px-4 py-1.5 md:px-5 md:py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all border border-neutral-800 hover:border-brand-accent/30">
                 Estilo & Trend
             </button>
-            <button onclick="filterCards('venda')" class="filter-btn bg-neutral-900 text-brand-muted hover:text-white px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all border border-neutral-800 hover:border-brand-accent/30">
+            <button onclick="filterCards('venda')" class="filter-btn bg-neutral-900 text-brand-muted hover:text-white px-4 py-1.5 md:px-5 md:py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all border border-neutral-800 hover:border-brand-accent/30">
                 Vendas & Social
             </button>
         </div>
@@ -186,6 +187,19 @@
                         <i data-lucide="sparkles" class="w-3 h-3"></i> Humor / Viral
                     </span>
                 </div>
+                
+                <!-- Box de Datas -->
+                <div class="mb-5 grid grid-cols-2 gap-2 text-[11px] font-bold">
+                    <div class="bg-neutral-900 p-2 rounded-lg border border-white/5 flex flex-col">
+                        <span class="text-brand-muted uppercase text-[9px] tracking-wider mb-0.5">📅 Produzir</span>
+                        <span class="text-white">21 de Maio</span>
+                    </div>
+                    <div class="bg-brand-accent/10 p-2 rounded-lg border border-brand-accent/20 flex flex-col">
+                        <span class="text-brand-accent uppercase text-[9px] tracking-wider mb-0.5">🚀 Postar</span>
+                        <span class="text-brand-accent">24 de Maio</span>
+                    </div>
+                </div>
+
                 <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-brand-accent">
                     “Seu namorado merece se vestir melhor”
                 </h3>
@@ -219,6 +233,19 @@
                         <i data-lucide="users" class="w-3 h-3"></i> Relato de Casal
                     </span>
                 </div>
+
+                <!-- Box de Datas -->
+                <div class="mb-5 grid grid-cols-2 gap-2 text-[11px] font-bold">
+                    <div class="bg-neutral-900 p-2 rounded-lg border border-white/5 flex flex-col">
+                        <span class="text-brand-muted uppercase text-[9px] tracking-wider mb-0.5">📅 Produzir</span>
+                        <span class="text-white">22 de Maio</span>
+                    </div>
+                    <div class="bg-brand-accent/10 p-2 rounded-lg border border-brand-accent/20 flex flex-col">
+                        <span class="text-brand-accent uppercase text-[9px] tracking-wider mb-0.5">🚀 Postar</span>
+                        <span class="text-brand-accent">26 de Maio</span>
+                    </div>
+                </div>
+
                 <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-pink-400">
                     “Enquanto ela escolhe maquiagem…”
                 </h3>
@@ -251,6 +278,19 @@
                         <i data-lucide="clapperboard" class="w-3 h-3"></i> Estética
                     </span>
                 </div>
+
+                <!-- Box de Datas -->
+                <div class="mb-5 grid grid-cols-2 gap-2 text-[11px] font-bold">
+                    <div class="bg-neutral-900 p-2 rounded-lg border border-white/5 flex flex-col">
+                        <span class="text-brand-muted uppercase text-[9px] tracking-wider mb-0.5">📅 Produzir</span>
+                        <span class="text-white">24 de Maio</span>
+                    </div>
+                    <div class="bg-brand-accent/10 p-2 rounded-lg border border-brand-accent/20 flex flex-col">
+                        <span class="text-brand-accent uppercase text-[9px] tracking-wider mb-0.5">🚀 Postar</span>
+                        <span class="text-brand-accent">28 de Maio</span>
+                    </div>
+                </div>
+
                 <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-purple-400">
                     “POV: Vocês são o casal mais estiloso do rolê”
                 </h3>
@@ -280,6 +320,19 @@
                         <i data-lucide="trending-up" class="w-3 h-3"></i> Trend
                     </span>
                 </div>
+
+                <!-- Box de Datas -->
+                <div class="mb-5 grid grid-cols-2 gap-2 text-[11px] font-bold">
+                    <div class="bg-neutral-900 p-2 rounded-lg border border-white/5 flex flex-col">
+                        <span class="text-brand-muted uppercase text-[9px] tracking-wider mb-0.5">📅 Produzir</span>
+                        <span class="text-white">25 de Maio</span>
+                    </div>
+                    <div class="bg-brand-accent/10 p-2 rounded-lg border border-brand-accent/20 flex flex-col">
+                        <span class="text-brand-accent uppercase text-[9px] tracking-wider mb-0.5">🚀 Postar</span>
+                        <span class="text-brand-accent">30 de Maio</span>
+                    </div>
+                </div>
+
                 <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-amber-400">
                     “Ela montou meu fit”
                 </h3>
@@ -311,6 +364,19 @@
                         <i data-lucide="message-square" class="w-3 h-3"></i> Engajamento
                     </span>
                 </div>
+
+                <!-- Box de Datas -->
+                <div class="mb-5 grid grid-cols-2 gap-2 text-[11px] font-bold">
+                    <div class="bg-neutral-900 p-2 rounded-lg border border-white/5 flex flex-col">
+                        <span class="text-brand-muted uppercase text-[9px] tracking-wider mb-0.5">📅 Produzir</span>
+                        <span class="text-white">27 de Maio</span>
+                    </div>
+                    <div class="bg-brand-accent/10 p-2 rounded-lg border border-brand-accent/20 flex flex-col">
+                        <span class="text-brand-accent uppercase text-[9px] tracking-wider mb-0.5">🚀 Postar</span>
+                        <span class="text-brand-accent">01 de Junho</span>
+                    </div>
+                </div>
+
                 <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-cyan-400">
                     “Qual casal representa mais?”
                 </h3>
@@ -343,6 +409,19 @@
                         <i data-lucide="shopping-bag" class="w-3 h-3"></i> Venda Indireta
                     </span>
                 </div>
+
+                <!-- Box de Datas -->
+                <div class="mb-5 grid grid-cols-2 gap-2 text-[11px] font-bold">
+                    <div class="bg-neutral-900 p-2 rounded-lg border border-white/5 flex flex-col">
+                        <span class="text-brand-muted uppercase text-[9px] tracking-wider mb-0.5">📅 Produzir</span>
+                        <span class="text-white">29 de Maio</span>
+                    </div>
+                    <div class="bg-brand-accent/10 p-2 rounded-lg border border-brand-accent/20 flex flex-col">
+                        <span class="text-brand-accent uppercase text-[9px] tracking-wider mb-0.5">🚀 Postar</span>
+                        <span class="text-brand-accent">03 de Junho</span>
+                    </div>
+                </div>
+
                 <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-emerald-400">
                     “Presente de Dia dos Namorados na BIRD”
                 </h3>
@@ -375,6 +454,19 @@
                         <i data-lucide="frown" class="w-3 h-3"></i> Humor
                     </span>
                 </div>
+
+                <!-- Box de Datas -->
+                <div class="mb-5 grid grid-cols-2 gap-2 text-[11px] font-bold">
+                    <div class="bg-neutral-900 p-2 rounded-lg border border-white/5 flex flex-col">
+                        <span class="text-brand-muted uppercase text-[9px] tracking-wider mb-0.5">📅 Produzir</span>
+                        <span class="text-white">31 de Maio</span>
+                    </div>
+                    <div class="bg-brand-accent/10 p-2 rounded-lg border border-brand-accent/20 flex flex-col">
+                        <span class="text-brand-accent uppercase text-[9px] tracking-wider mb-0.5">🚀 Postar</span>
+                        <span class="text-brand-accent">05 de Junho</span>
+                    </div>
+                </div>
+
                 <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-brand-accent">
                     “Solteiro no Dia dos Namorados”
                 </h3>
@@ -404,6 +496,19 @@
                         <i data-lucide="music" class="w-3 h-3"></i> Trend Rítmica
                     </span>
                 </div>
+
+                <!-- Box de Datas -->
+                <div class="mb-5 grid grid-cols-2 gap-2 text-[11px] font-bold">
+                    <div class="bg-neutral-900 p-2 rounded-lg border border-white/5 flex flex-col">
+                        <span class="text-brand-muted uppercase text-[9px] tracking-wider mb-0.5">📅 Produzir</span>
+                        <span class="text-white">02 de Junho</span>
+                    </div>
+                    <div class="bg-brand-accent/10 p-2 rounded-lg border border-brand-accent/20 flex flex-col">
+                        <span class="text-brand-accent uppercase text-[9px] tracking-wider mb-0.5">🚀 Postar</span>
+                        <span class="text-brand-accent">07 de Junho</span>
+                    </div>
+                </div>
+
                 <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-purple-400">
                     “Transição no Beat”
                 </h3>
@@ -439,6 +544,19 @@
                         <i data-lucide="video" class="w-3 h-3"></i> Lifestyle
                     </span>
                 </div>
+
+                <!-- Box de Datas -->
+                <div class="mb-5 grid grid-cols-2 gap-2 text-[11px] font-bold">
+                    <div class="bg-neutral-900 p-2 rounded-lg border border-white/5 flex flex-col">
+                        <span class="text-brand-muted uppercase text-[9px] tracking-wider mb-0.5">📅 Produzir</span>
+                        <span class="text-white">04 de Junho</span>
+                    </div>
+                    <div class="bg-brand-accent/10 p-2 rounded-lg border border-brand-accent/20 flex flex-col">
+                        <span class="text-brand-accent uppercase text-[9px] tracking-wider mb-0.5">🚀 Postar</span>
+                        <span class="text-brand-accent">09 de Junho</span>
+                    </div>
+                </div>
+
                 <h3 class="font-heading font-extrabold text-lg mb-6 uppercase leading-tight text-white transition-colors duration-300 group-hover:text-cyan-400">
                     “Date Ideal”
                 </h3>
@@ -481,6 +599,18 @@
                             Entretenimento / Prova Social
                         </span>
                     </div>
+
+                    <!-- Box de Datas para Card Especial -->
+                    <div class="mb-6 grid grid-cols-2 gap-4 text-xs font-bold max-w-sm">
+                        <div class="bg-neutral-900 p-3 rounded-lg border border-white/5 flex flex-col">
+                            <span class="text-brand-muted uppercase text-[9px] tracking-wider mb-1">📅 Produzir (Gravação Externa)</span>
+                            <span class="text-white text-sm">05 de Junho</span>
+                        </div>
+                        <div class="bg-brand-accent/10 p-3 rounded-lg border border-brand-accent/20 flex flex-col">
+                            <span class="text-brand-accent uppercase text-[9px] tracking-wider mb-1">🚀 Postar (Grand Finale)</span>
+                            <span class="text-brand-accent text-sm">11 de Junho</span>
+                        </div>
+                    </div>
                     
                     <h3 class="font-heading font-black text-2xl mb-6 uppercase leading-tight text-white max-w-lg transition-colors duration-300 group-hover:text-brand-accent">
                         “Ela não sabia o que dar”
@@ -520,7 +650,7 @@
                                 <i data-lucide="rocket" class="w-4 h-4"></i> Objetivo e Posicionamento
                             </div>
                             <p class="text-neutral-200 text-base leading-relaxed">
-                                Gerar entretenimento autêntico em formato de entrevista curta. Mostra na prática como a BIRD resolve as dores do público com peças fáceis de presentear e com estética acima da média.
+                                Gerar entretenimento autêntico em formato de entrevista curta. Mostra na prática como a BIRD resolve as dores do público com peças fáceis de presentear e com estética acima da média na véspera da data comemorativa.
                             </p>
                         </div>
                     </div>
