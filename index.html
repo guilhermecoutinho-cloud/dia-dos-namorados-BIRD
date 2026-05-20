@@ -143,18 +143,18 @@
     <!-- Hero Section -->
     <section class="relative max-w-7xl mx-auto px-6 pt-12 md:pt-20 pb-8 md:pb-12 text-center z-10">
         <span class="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-brand-accent/10 text-brand-accent text-[11px] md:text-xs font-bold uppercase tracking-widest mb-4 md:mb-6 border border-brand-accent/30 animate-pulse">
-            <i data-lucide="heart" class="w-3 md:w-3.5 h-3 md:h-3.5 fill-brand-accent"></i> Dia dos Namorados BIRD
+            <i data-lucide="heart" class="w-3 md:w-3.5 h-3 md:h-3.5 fill-brand-accent"></i> 10 Ideias de Conteúdo BIRD
         </span>
         
-        <!-- Título com tamanho otimizado para celulares e computadores -->
-        <h2 class="font-heading font-black text-2xl sm:text-3xl md:text-5xl lg:text-6xl uppercase tracking-tighter mb-4 md:mb-6 leading-tight text-white">
-            As 10 Ideias Mais Fortes <br class="hidden sm:inline"/> 
+        <!-- Título principal com proporções otimizadas para todas as telas (Max de text-4xl/5xl no Desktop) -->
+        <h2 class="font-heading font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl uppercase tracking-tighter mb-4 md:mb-6 leading-tight text-white max-w-4xl mx-auto">
+            Campanha Bird <br class="hidden sm:inline"/> 
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-pink-500 to-rose-400 drop-shadow-[0_2px_20px_rgba(244,63,94,0.3)]">
-                Pra Campanha
+                Dia dos namorados
             </span>
         </h2>
         
-        <p class="text-brand-muted max-w-xl mx-auto text-xs md:text-base font-medium leading-relaxed mb-6">
+        <p class="text-brand-muted max-w-xl mx-auto text-xs md:text-sm font-medium leading-relaxed mb-6">
             Planejamento estratégico de conteúdo urbano para tracionar engajamento, com cronograma sugerido para produzir e postar tudo antes de 12 de junho.
         </p>
 
@@ -650,7 +650,7 @@
                                 <i data-lucide="rocket" class="w-4 h-4"></i> Objetivo e Posicionamento
                             </div>
                             <p class="text-neutral-200 text-base leading-relaxed">
-                                Gerar entretenimento autêntico em formato de entrevista curta. Mostra na prática como a BIRD resolve as dores do público com peças fáceis de presentear e com estética acima da média na véspera da data comemorativa.
+                                Gerar entertainment autêntico em formato de entrevista curta. Mostra na prática como a BIRD resolve as dores do público com peças fáceis de presentear e com estética acima da média na véspera da data comemorativa.
                             </p>
                         </div>
                     </div>
@@ -669,7 +669,7 @@
     <script>
         // --- 1. SCRIPT DE FILTROS ---
         function filterCards(category) {
-            // Atualizar botões de filtro
+            // Update filter buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('bg-brand-accent', 'text-white', 'active');
                 btn.classList.add('bg-neutral-900', 'text-brand-muted');
@@ -679,7 +679,7 @@
             activeBtn.classList.remove('bg-neutral-900', 'text-brand-muted');
             activeBtn.classList.add('bg-brand-accent', 'text-white', 'active');
 
-            // Filtrar cards
+            // Filter cards
             const cards = document.querySelectorAll('#ideasGrid > article');
             cards.forEach(card => {
                 const cardCat = card.getAttribute('data-category');
